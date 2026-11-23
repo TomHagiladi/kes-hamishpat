@@ -126,6 +126,24 @@ ul.dia li::before{content:"";position:absolute;right:4px;top:.55em;width:11px;he
 .bio-row .q{height:108px}
 .bio-row .p{height:150px}
 .bio-row .cm{height:104px}
+/* slide 3, נעים להכיר (21.11.2026): logos only, as large as the slide allows.
+   Click 1: Shorashim, Future Scientists, Pisga - one row across the full width.
+   Click 2: those three shrink to the right, the podcast and the community come in under them, and the book
+   comes in on the left at the full height of the slide, so its cover can be read. */
+.meet{--h1:220px;--gl:0px}
+.meet:has(.r2.vis){--h1:130px;--gl:421px}
+.logos{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:space-evenly}
+.logos .logo-row{display:flex;align-items:center;justify-content:space-evenly;gap:24px;margin-left:var(--gl);
+  transition:opacity .5s ease,transform .5s ease,filter .5s ease,margin-left .6s ease}
+.logos .r2{margin-left:421px}
+.meet .card{background:#fff;border-radius:10px;padding:10px;box-shadow:0 8px 22px rgba(60,45,25,.16);border:1px solid #E6DCCB}
+.logo-row img{display:block;height:var(--h1);width:auto;transition:height .6s ease}
+.logos .r2 img{height:214px}
+.meet .book{position:absolute;left:72px;top:52px;opacity:0;transform:translateY(12px);filter:blur(3px);
+  transition:opacity .5s ease .15s,transform .5s ease .15s,filter .5s ease .15s}
+.meet:has(.r2.vis) .book{opacity:1;transform:none;filter:none}
+.meet .book img{display:block;height:594px;width:auto}
+.static .meet *{transition:none!important}
 
 /* route: the two parts of the lecture as two stations, light then dark (slide 4) */
 .route{display:flex;flex-direction:column;gap:34px;margin-top:10px}
@@ -195,12 +213,14 @@ ul.dia li::before{content:"";position:absolute;right:4px;top:.55em;width:11px;he
 .s-close{flex-direction:row}
 .cl-r{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px}
 .logo-card{background:#fff;border-radius:14px;padding:18px 26px;box-shadow:0 8px 24px rgba(60,45,25,.16)}
-.logo-card img{width:380px;display:block}
+.logo-card img{width:300px;display:block}
 .s-close h2{font-size:96px;margin:0}
 .cl-name{font-size:30px;font-weight:700;letter-spacing:4px;color:var(--label)}
-.cl-l{flex:0 0 560px;display:flex;align-items:center;justify-content:center}
+.ep-card{background:#fff;border-radius:14px;padding:10px;box-shadow:0 8px 24px rgba(60,45,25,.16);margin-top:6px}
+.ep-card img{width:600px;display:block;border-radius:8px}
+.cl-l{flex:0 0 520px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px}
 .qr-card{background:#fff;border-radius:16px;padding:22px;box-shadow:0 8px 24px rgba(60,45,25,.16)}
-.qr-card img{width:430px;height:430px;display:block}
+.qr-card img{width:340px;height:340px;display:block}
 
 /* Alef has small old-style figures; standalone numerals use lining digits (placed last so it wins) */
 .dark .num,.trio .n,.step .n,.g6 .n,.chip b{font-family:Arial,'Helvetica Neue',sans-serif;font-weight:700}
@@ -221,11 +241,14 @@ body.clip-on #num,body.clip-on #bar,body.clip-on #help{opacity:0}
 /* ================= MECHANICS ================= */
 .f{opacity:0;transform:translateY(12px);filter:blur(3px);transition:opacity .5s ease,transform .5s ease,filter .5s ease}
 .f.vis{opacity:1;transform:none;filter:none}
+/* .fw comes up together with the fragment marked .fk on the same slide: one click for both */
+.fw{opacity:0;transform:translateY(12px);filter:blur(3px);transition:opacity .5s ease,transform .5s ease,filter .5s ease}
+.slide:has(.fk.vis) .fw{opacity:1;transform:none;filter:none}
 .slide.enter .st{animation:rise .75s cubic-bezier(.2,.7,.2,1) both;animation-delay:calc(var(--i,0) * 120ms)}
 @keyframes rise{from{opacity:0;transform:translateY(14px);filter:blur(4px)}to{opacity:1;transform:none;filter:none}}
 @keyframes lightOn{from{opacity:0}to{opacity:1}}
-.static .st,.static .f,.static .shaft,.static .pf{animation:none!important;transition:none!important}
-@media (prefers-reduced-motion:reduce){.f,.pf,.slide.enter .st,.slide.dark.on .shaft{transition:none;animation:none}}
+.static .st,.static .f,.static .fw,.static .shaft,.static .pf{animation:none!important;transition:none!important}
+@media (prefers-reduced-motion:reduce){.f,.fw,.pf,.slide.enter .st,.slide.dark.on .shaft{transition:none;animation:none}}
 /* print or "save as PDF": one slide per page, everything revealed - a fallback copy that opens on any computer */
 @media print{
   @page{size:1280px 720px;margin:0}
@@ -234,8 +257,10 @@ body.clip-on #num,body.clip-on #bar,body.clip-on #help{opacity:0}
   #stage{position:static!important;display:block!important}
   #deck{transform:none!important;width:1280px!important;height:auto!important;overflow:visible!important;box-shadow:none!important}
   .slide{display:flex!important;position:relative!important;inset:auto!important;width:1280px;height:720px;break-after:page;page-break-after:always;overflow:hidden}
-  .f,.pf,.st{opacity:1!important;transform:none!important;filter:none!important;animation:none!important;transition:none!important}
+  .f,.fw,.pf,.st{opacity:1!important;transform:none!important;filter:none!important;animation:none!important;transition:none!important}
   .slide.clip video{display:none!important}
+  .meet{--h1:130px;--gl:421px}
+  .meet .book{opacity:1!important;transform:none!important;filter:none!important}
   .slide.clip{background:#F3EEE5 url(assets/video/pharaoh-poster.jpg) center/contain no-repeat!important}
   #bar,#num,#help,#fs,.skip-link,.clip-play,.sr-only{display:none!important}
 }
@@ -267,7 +292,7 @@ a:focus-visible,button:focus-visible,[tabindex]:focus-visible{outline:3px solid 
 <h1 class="st">כס המשפט<br>בעידן המכונה</h1>
 <div class="tt-rule st"></div>
 <p class="tt-sub st">על צדק, טכנולוגיה ודמות השופט</p>
-<p class="tt-by st"><b>תום הגלעדי</b><span>חיפה · 6 באוקטובר 2026</span></p>
+<p class="tt-by st"><b>תום הגלעדי</b><span>נווה אילן · 23 בנובמבר 2026</span></p>
 </div>
 <div class="art st"><img src="assets/gen/chair.webp" alt=""></div>
 </section>
@@ -280,22 +305,20 @@ a:focus-visible,button:focus-visible,[tabindex]:focus-visible{outline:3px solid 
 
 <!-- 2 -->
 <section class="slide">
-<div class="wrap">
+<div class="wrap meet">
 <h2 class="st big">נעים להכיר</h2>
-<div class="panel bar pf"><ul class="dia">
-<li class="f">עשרים שנה בחינוך: הקמה וניהול בית ספר, פסג"ה, מדעני העתיד</li>
-<li class="f">שלוש השנים האחרונות: בינה מלאכותית בארגוני למידה והוראה</li>
-<li class="f">פודקאסט, קהילה וספר</li>
-<li class="f">תחום מומחיותי: הפילוסופיה של הטכנולוגיה</li>
-</ul></div>
-<div class="bio-row st">
-<div class="card"><img class="w" src="assets/bio/shorashim.png" alt="בית ספר שורשים"></div>
-<div class="card"><img class="w" src="assets/bio/pisga.png" alt="פסגה תל אביב-יפו"></div>
-<div class="card"><img class="q" src="assets/bio/future-scientists.jpg" alt="מדעני העתיד"></div>
-<div class="card"><img class="q" src="assets/bio/podcast.jpg" alt="הפודקאסט דיבורי בינה"></div>
-<div class="card"><img class="cm" src="assets/bio/community-page.jpg" alt="קהילת בינה מלאכותית בחינוך ובאקדמיה"></div>
-<div class="card"><img class="p" src="assets/bio/book.png" alt="אהבת למידה וחדוות גילוי"></div>
+<div class="logos">
+<div class="logo-row f">
+<div class="card"><img src="assets/bio/shorashim.png" alt="בית ספר שורשים"></div>
+<div class="card"><img src="assets/bio/future-scientists.jpg" alt="מדעני העתיד"></div>
+<div class="card"><img src="assets/bio/pisga.png" alt="פסגה תל אביב-יפו"></div>
 </div>
+<div class="logo-row r2 f">
+<div class="card"><img src="assets/bio/podcast.jpg" alt="הפודקאסט דיבורי בינה"></div>
+<div class="card"><img src="assets/bio/community-page.jpg" alt="קהילת בינה מלאכותית בחינוך ובאקדמיה"></div>
+</div>
+</div>
+<div class="card book"><img src="assets/bio/book.png" alt="הספר אהבת למידה וחדוות גילוי: יוטגוגיה עם בינה מלאכותית יוצרת"></div>
 </div>
 </section>
 
@@ -385,9 +408,9 @@ a:focus-visible,button:focus-visible,[tabindex]:focus-visible{outline:3px solid 
 <p class="meta st">ויליאם סטנלי ג'בונס<i>·</i>1865<i>·</i>על שאלת הפחם</p>
 <div class="panel bar pf"><ul class="dia">
 <li class="f">מנוע יעיל יותר - <b>יותר</b> פחם, לא פחות</li>
-<li class="f">ערעור זול וזמין - <b>יותר</b> ערעורים, יותר תביעות</li>
+<li class="f fk">ערעור זול וזמין - <b>יותר</b> ערעורים, יותר תביעות</li>
 </ul></div>
-<p class="closer f"><span class="r">כי עכשיו אפשר.</span></p>
+<p class="closer fw"><span class="r">כי עכשיו אפשר.</span></p>
 </div>
 <div class="art st"><img src="assets/gen/steam.webp" alt=""></div>
 </div>
@@ -418,10 +441,10 @@ a:focus-visible,button:focus-visible,[tabindex]:focus-visible{outline:3px solid 
 <div class="kick st">החברה אל מול המערכת</div>
 <h2 class="st big">האדם האנלוגי בעידן הדיגיטלי</h2>
 <p class="sub2 st">ועלות הכלים</p>
-<div class="panel bar pf"><ul class="dia">
-<li class="f">מי שאינו אוריין דיגיטלית - נשאר בחוץ</li>
+<div class="panel bar st"><ul class="dia">
+<li>מי שאינו אוריין דיגיטלית - נשאר בחוץ</li>
 </ul></div>
-<p class="closer f">פילוג חברתי: <span class="r">החזקים מתחזקים, החלשים נחלשים</span></p>
+<p class="closer st">פילוג חברתי: <span class="r">החזקים מתחזקים, החלשים נחלשים</span></p>
 </div>
 <div class="art st"><img src="assets/gen/analog.webp" alt=""></div>
 </div>
@@ -435,7 +458,7 @@ a:focus-visible,button:focus-visible,[tabindex]:focus-visible{outline:3px solid 
 <div class="kick st">החברה אל מול המערכת</div>
 <h2 class="st big">הצדק מוזל ומתייקר</h2>
 <p class="sub2 st">(עשיית הצדק)</p>
-<div class="panel bar pf"><p class="f">מי שאין בכיסו כסף לכלים בתשלום - <span class="r">מודר</span></p></div>
+<div class="panel bar st"><p>מי שאין בכיסו כסף לכלים בתשלום - <span class="r">מודר</span></p></div>
 </div>
 </div>
 </section>
@@ -466,7 +489,7 @@ a:focus-visible,button:focus-visible,[tabindex]:focus-visible{outline:3px solid 
 <div class="tx">
 <div class="kick st">הניסיון</div>
 <h2 class="st big">מאפיינו של המשפט</h2>
-<div class="panel bar pf"><p class="lead f">והמפגש עם איכותה של הבינה המלאכותית</p></div>
+<div class="panel bar st"><p class="lead">והמפגש עם איכותה של הבינה המלאכותית</p></div>
 </div>
 </div>
 </section>
@@ -478,7 +501,7 @@ a:focus-visible,button:focus-visible,[tabindex]:focus-visible{outline:3px solid 
 <div class="kick st">הטענה</div>
 <div class="panel bar stmt">
 <p class="lead st">חדירת הבינה המלאכותית למשפט אינה שדרוג אינסטרומנטלי, אלא</p>
-<p class="big r f mt"><span class="nw">שינוי-משטר</span> במקורות הלגיטימציה המשפטית</p>
+<p class="big r st mt"><span class="nw">שינוי-משטר</span> במקורות הלגיטימציה המשפטית</p>
 </div>
 </div>
 </section>
@@ -489,7 +512,7 @@ a:focus-visible,button:focus-visible,[tabindex]:focus-visible{outline:3px solid 
 <div class="tx">
 <div class="kick st">הסכנה</div>
 <div class="panel bar st"><p class="lead">אינה שהמכונה תיכשל,<br>אלא שהיא</p></div>
-<p class="mega f">תצליח</p>
+<p class="mega st">תצליח</p>
 </div>
 <div class="art st"><img src="assets/gen/keylock.webp" alt=""></div>
 </div>
@@ -536,8 +559,8 @@ a:focus-visible,button:focus-visible,[tabindex]:focus-visible{outline:3px solid 
 <div class="kick st">הסכנה</div>
 <div class="stairs">
 <p class="s1 st">נראות של מערכת בתפוקות גבוהות</p>
-<p class="s2 f">שהייתה משפט, ומקור סמכותה היה לגיטימי</p>
-<p class="s3 f">ודעכה לכדי <span class="r">מערכת בקרה חברתית</span></p>
+<p class="s2 st">שהייתה משפט, ומקור סמכותה היה לגיטימי</p>
+<p class="s3 st">ודעכה לכדי <span class="r">מערכת בקרה חברתית</span></p>
 </div>
 </div>
 </section>
@@ -549,8 +572,8 @@ a:focus-visible,button:focus-visible,[tabindex]:focus-visible{outline:3px solid 
 <div class="kick st">המפגש</div>
 <div class="panel bar">
 <p class="lead st">ששת תנאי הלגיטימציה של המשפט</p>
-<p class="mega2 f">אל מול</p>
-<p class="lead f">איכויותיה של הבינה המלאכותית</p>
+<p class="mega2 st">אל מול</p>
+<p class="lead st">איכויותיה של הבינה המלאכותית</p>
 </div>
 </div>
 <div class="art st"><img src="assets/gen/hands.webp" alt=""></div>
@@ -705,7 +728,7 @@ a:focus-visible,button:focus-visible,[tabindex]:focus-visible{outline:3px solid 
 <div class="wrap ST">
 <div class="wm">רשומה</div>
 <div class="kick st">הנפרץ</div>
-<div class="panel bar stmt"><p class="lead st">האותנטיות האפיסטמית של הרשומה:</p><p class="big f mt">היותה <span class="r">מקור ידיעה</span>,<br>ולא מאגר עשיר של טקסטים.</p></div>
+<div class="panel bar stmt"><p class="lead st">האותנטיות האפיסטמית של הרשומה:</p><p class="big st mt">היותה <span class="r">מקור ידיעה</span>,<br>ולא מאגר עשיר של טקסטים.</p></div>
 </div>
 </section>
 
@@ -739,8 +762,8 @@ a:focus-visible,button:focus-visible,[tabindex]:focus-visible{outline:3px solid 
 <div class="tx">
 <div class="kick st">מצפון אנושי בהכרעה</div>
 <h2 class="st big">ניסיון החיים</h2>
-<div class="panel bar pf"><p class="lead f">שנים של תודעה אנושית, השוכנת בתוך גוף, בעולם גשמי</p></div>
-<p class="closer f"><span class="r">ומה בין זה למצפונה של המכונה?</span></p>
+<div class="panel bar st"><p class="lead">שנים של תודעה אנושית, השוכנת בתוך גוף, בעולם גשמי</p></div>
+<p class="closer st"><span class="r">ומה בין זה למצפונה של המכונה?</span></p>
 </div>
 <div class="art st"><img src="assets/gen/elderhand.webp" alt=""></div>
 </div>
@@ -753,8 +776,8 @@ a:focus-visible,button:focus-visible,[tabindex]:focus-visible{outline:3px solid 
 <div class="kick st">נדידת מקור הסמכות</div>
 <div class="stairs">
 <p class="s1 st">הלגיטימציה של הכרעת הדין אינה נובעת מכך שהיא מדויקת יותר</p>
-<p class="s2 f">גם אם נכיר בכך שהדיוק הוא צדק</p>
-<p class="s3 f">אלא מכך ש<span class="r">מקור השיפוט אנושי</span></p>
+<p class="s2 st">גם אם נכיר בכך שהדיוק הוא צדק</p>
+<p class="s3 st">אלא מכך ש<span class="r">מקור השיפוט אנושי</span></p>
 </div>
 </div>
 </section>
@@ -777,9 +800,9 @@ a:focus-visible,button:focus-visible,[tabindex]:focus-visible{outline:3px solid 
 <div class="kick st">כלליות ושוויון בפני החוק</div>
 <div class="panel bar">
 <p class="lead st">נורמה כללית מכוננת <span class="r">קהילה של שווים</span> - וזירה ציבורית לשיח על תוכנו של הדין</p>
-<p class="f mt">אין עוד "אדם סביר" שאפשר להתדיין עליו - בפסיקה, בכיתה, בבית המחוקקים</p>
+<p class="st mt">אין עוד "אדם סביר" שאפשר להתדיין עליו - בפסיקה, בכיתה, בבית המחוקקים</p>
 </div>
-<p class="closer f">אלא <span class="r">מיליוני ציונים אישיים</span></p>
+<p class="closer st">אלא <span class="r">מיליוני ציונים אישיים</span></p>
 </div>
 </div>
 </section>
@@ -802,9 +825,9 @@ a:focus-visible,button:focus-visible,[tabindex]:focus-visible{outline:3px solid 
 <div class="wrap C">
 <div class="kick st">נדידת מקור הסמכות</div>
 <div class="pair big-pair">
-<div class="panel f"><div class="lab">מן</div><p class="lead">הכלל שציבור של שווים נתן לעצמו</p></div>
-<div class="arrowv f">←</div>
-<div class="panel dkp f"><div class="lab">אל</div><p class="lead">הכיול שמערכת מחשבת עבור כל אדם לבדו</p></div>
+<div class="panel st"><div class="lab">מן</div><p class="lead">הכלל שציבור של שווים נתן לעצמו</p></div>
+<div class="arrowv st">←</div>
+<div class="panel dkp st"><div class="lab">אל</div><p class="lead">הכיול שמערכת מחשבת עבור כל אדם לבדו</p></div>
 </div>
 </div>
 </section>
@@ -861,8 +884,8 @@ a:focus-visible,button:focus-visible,[tabindex]:focus-visible{outline:3px solid 
 <div class="kick st">כושר תיקון מוסרי</div>
 <div class="panel bar stmt">
 <p class="lead st">קפיצות הגדילה של המשפט אינן אקסטרפולציה סטטיסטית של נתוני העבר,</p>
-<p class="big f mt">אלא <span class="r">שבירה מכוונת של הדפוס</span></p>
-<p class="sub2 f mt">שעלותה האנרגטית רבה</p>
+<p class="big st mt">אלא <span class="r">שבירה מכוונת של הדפוס</span></p>
+<p class="sub2 st mt">שעלותה האנרגטית רבה</p>
 </div>
 </div>
 </section>
@@ -888,11 +911,11 @@ a:focus-visible,button:focus-visible,[tabindex]:focus-visible{outline:3px solid 
 <div class="kick st">כושר תיקון מוסרי</div>
 <h2 class="st">הדין מתעדכן מבחוץ</h2>
 <div class="pair">
-<div class="panel f"><div class="lab">במקום</div><p class="lead">מערכת המתקנת את עצמה מבפנים, מתוך מאבק</p></div>
-<div class="arrowv f">←</div>
-<div class="panel dkp f"><div class="lab">נוצרת</div><p class="lead">מערכת המתעדכנת מבחוץ, בידי מי ששולט בה</p></div>
+<div class="panel st"><div class="lab">במקום</div><p class="lead">מערכת המתקנת את עצמה מבפנים, מתוך מאבק</p></div>
+<div class="arrowv st">←</div>
+<div class="panel dkp st"><div class="lab">נוצרת</div><p class="lead">מערכת המתעדכנת מבחוץ, בידי מי ששולט בה</p></div>
 </div>
-<p class="closer f">הסמכות לקבוע מהו ערך ראוי נודדת מן הזירה הציבורית - אל <span class="r">חדרי האימון</span> של מי שמחזיק במודל, ואינו חב לציבור דין וחשבון</p>
+<p class="closer st">הסמכות לקבוע מהו ערך ראוי נודדת מן הזירה הציבורית - אל <span class="r">חדרי האימון</span> של מי שמחזיק במודל, ואינו חב לציבור דין וחשבון</p>
 </div>
 </section>
 
@@ -932,11 +955,14 @@ a:focus-visible,button:focus-visible,[tabindex]:focus-visible{outline:3px solid 
 <!-- 49 -->
 <section class="slide s-close">
 <div class="cl-r">
-<div class="logo-card st"><img src="assets/logo.png" alt="תום הגלעדי"></div>
 <h2 class="st">תודה רבה</h2>
 <div class="cl-name st">תום הגלעדי</div>
+<div class="ep-card st"><img src="assets/podcast-ep16-yaron-gat.jpg" alt="דיבורי בינה, פרק 16: תנורו של עכנאי - שיחה עם השופט ירון גת"></div>
 </div>
-<div class="cl-l st"><div class="qr-card"><img src="assets/qr.svg" alt="קוד לעמוד הקישורים"></div></div>
+<div class="cl-l">
+<div class="logo-card st"><img src="assets/logo.png" alt="תום הגלעדי"></div>
+<div class="qr-card st"><img src="assets/qr.svg" alt="קוד לעמוד הקישורים"></div>
+</div>
 <a class="a11y-link" href="accessibility.html">הצהרת נגישות</a>
 </section>
 
